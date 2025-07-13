@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment # Deployment 정의
+
+# Deployment 이름(메타데이터)
+metadata:
+  name: my-deployment
+
+# Deployment 스펙 정의
+spec:
+  selector: # Label 셀렉터 정의
+    matchLabels:
+      app: my-app # 이 레이블을 가진 Pod을 선택하겠다
+
+  template: # Pod 템플릿 정의 (레이블 셀렉터가 어떤 Pod을 선택할지 정의)
+    metadata:
+      labels:
+        app: my-app # Pod 레이블
+
+    # Pod 템플릿 스펙 정의
+    spec:
+      containers:
+        - name: web # 컨테이너 이름
+          image: nginx:latest # NGINX 최신 버전 이미지 사용
+          imagePullPolicy: IfNotPresent # 이미지가 없을 때만 풀
+          ports:
+            - containerPort: 80 # 컨테이너가 사용하는 포트
+              protocol: TCP
+      
